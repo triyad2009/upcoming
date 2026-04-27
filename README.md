@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coming Soon | Tahsinullah Riyad</title>
+
+<!-- ✅ Browser Theme Color -->
+<meta name="theme-color" content="#A4945B">
+<meta name="msapplication-navbutton-color" content="#A4945B">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- ✅ Favicon (Logo Only in Tab/Search Bar) -->
+<link rel="icon" type="image/png" href="https://i.postimg.cc/LsK2d2nS/1000147579-removebg-preview.png">
+
+<title>Tahsinullah Riyad | Coming Soon</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -27,7 +37,7 @@ color:#A4945B;
 overflow:hidden;
 }
 
-/* Floating Particles */
+/* Floating Gold Particles */
 body::after{
 content:"";
 position:absolute;
@@ -45,7 +55,7 @@ z-index:-1;
 100%{transform:translateY(-200px);}
 }
 
-/* ===== Animated Profile ===== */
+/* ✅ Animated Profile Circle */
 .profile-wrapper{
 position:relative;
 width:200px;
@@ -94,7 +104,7 @@ height:100%;
 object-fit:cover;
 }
 
-/* Name Shine */
+/* ✅ Name Shine Animation */
 h1{
 font-size:clamp(28px,6vw,50px);
 letter-spacing:3px;
@@ -117,19 +127,18 @@ font-size:clamp(14px,4vw,22px);
 animation:fadeIn 3s ease;
 }
 
-/* Countdown */
+/* ✅ Countdown One Line */
 .countdown{
 display:flex;
 gap:12px;
 margin:30px 0;
 flex-wrap:nowrap;
-animation:fadeIn 3s ease;
 }
 
 .time-box{
 background:#D1C9AB;
 color:#A4945B;
-padding:14px 14px;
+padding:14px;
 border-radius:12px;
 min-width:70px;
 box-shadow:0 0 15px rgba(164,148,91,0.6);
@@ -147,14 +156,12 @@ font-size:clamp(18px,4vw,28px);
 font-weight:800;
 }
 
-/* Portfolio Button */
+/* ✅ Portfolio Button */
 .portfolio-btn{
 margin:15px 0 25px;
-animation:fadeIn 4s ease;
 }
 
 .portfolio-btn a{
-position:relative;
 display:inline-block;
 padding:14px 45px;
 font-weight:700;
@@ -162,7 +169,6 @@ text-decoration:none;
 color:#A4945B;
 background:linear-gradient(45deg,#D1C9AB,#A4945B);
 border-radius:50px;
-overflow:hidden;
 box-shadow:0 0 20px rgba(164,148,91,0.7);
 animation:buttonGlow 2s infinite alternate;
 transition:0.4s;
@@ -177,14 +183,13 @@ to{box-shadow:0 0 30px rgba(164,148,91,1);}
 transform:scale(1.07);
 }
 
-/* Social */
+/* ✅ Social */
 .social{
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
 gap:10px;
 max-width:1000px;
-animation:fadeIn 5s ease;
 }
 
 .social a{
@@ -203,15 +208,12 @@ color:#A4945B;
 transform:scale(1.1);
 }
 
-/* Footer */
 .footer{
 margin-top:25px;
 font-size:12px;
 opacity:0.7;
-animation:fadeIn 6s ease;
 }
 
-/* Fade In */
 @keyframes fadeIn{
 from{opacity:0; transform:translateY(20px);}
 to{opacity:1; transform:translateY(0);}
@@ -227,6 +229,7 @@ to{opacity:1; transform:translateY(0);}
 
 <body>
 
+<!-- ✅ Profile Image -->
 <div class="profile-wrapper">
 <div class="profile-img">
 <img src="https://i.postimg.cc/MpT0VJD9/IMG-20260217-124734020.jpg">
@@ -251,11 +254,6 @@ to{opacity:1; transform:translateY(0);}
 <a href="https://github.com/tahsinullahriyad" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/in/tahsinullah-riyad-b16035304" target="_blank">LinkedIn</a>
 <a href="https://www.facebook.com/tahsinullah.riyad.tr" target="_blank">Facebook</a>
-<a href="https://www.instagram.com/tahsinullah.riyad" target="_blank">Instagram</a>
-<a href="https://wa.me/qr/E44HZE4NNWUSF1" target="_blank">WhatsApp</a>
-<a href="https://x.com/tahsinullar2k9" target="_blank">Twitter (X)</a>
-<a href="https://t.me/tahsinullahriyad_tr" target="_blank">Telegram</a>
-<a href="https://discord.com/users/tahsinullahriyad" target="_blank">Discord</a>
 <a href="mailto:info@tahsinullahriyad.world">Email</a>
 </div>
 
@@ -264,22 +262,16 @@ to{opacity:1; transform:translateY(0);}
 </div>
 
 <script>
-// ✅ Fixed Launch Date (Will NOT reset on refresh)
 const launchDate = new Date("May 27, 2026 00:00:00").getTime();
 
 setInterval(() => {
 const now = new Date().getTime();
 const distance = launchDate - now;
 
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-document.getElementById("days").innerHTML = days;
-document.getElementById("hours").innerHTML = hours;
-document.getElementById("minutes").innerHTML = minutes;
-document.getElementById("seconds").innerHTML = seconds;
+document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
+document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
 
 if (distance < 0) {
 document.querySelector(".countdown").innerHTML = "🚀 Website is Live!";
