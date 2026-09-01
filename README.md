@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=Noto+Sans+Bengali:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -43,7 +43,7 @@ html{
 
 body{
   min-height:100vh;
-  font-family:"DM Sans",sans-serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali","DM Sans",monospace;
   color:var(--text);
   background:
     radial-gradient(
@@ -163,7 +163,7 @@ nav{
 }
 
 .logo{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:20px;
   white-space:nowrap;
 }
@@ -173,32 +173,197 @@ nav{
 }
 
 .nav-links{
-  display:flex;
-  gap:4px;
-}
-
-.nav-links a{
-  font-size:13.5px;
-  font-weight:500;
-  color:var(--muted);
-  padding:7px 12px;
-  border-radius:999px;
-  transition:.18s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.active{
-  color:var(--text);
-  background:rgba(255,255,255,.5);
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
+  font-size:11px;
+  color:var(--text-mid);
+  letter-spacing:.02em;
+  padding:0 6px;
 }
 
 .menu-btn{
-  display:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
   width:38px;
   height:38px;
   border-radius:50%;
   background:rgba(255,255,255,.5);
+  position:relative;
+  z-index:2100;
+  flex-shrink:0;
+}
+
+.menu-btn span{
+  display:block;
+  width:16px;
+  height:2px;
+  border-radius:2px;
+  background:var(--text);
+  transition:transform .35s cubic-bezier(.76,0,.24,1),opacity .25s ease;
+}
+
+.menu-btn.open span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+
+.menu-btn.open span:nth-child(2){
+  opacity:0;
+}
+
+.menu-btn.open span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
+
+/* =========================
+   GLASS BUILDING FLOORS MENU
+========================= */
+
+.menu-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1900;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  background:rgba(0,21,36,.18);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  opacity:0;
+  transition:opacity .35s ease;
+}
+
+.menu-overlay.open{
+  pointer-events:all;
+  opacity:1;
+}
+
+.menu-stack{
+  position:relative;
+  width:min(420px,calc(100% - 40px));
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  perspective:900px;
+}
+
+.menu-floor{
+  position:relative;
+  width:100%;
+  padding:22px 28px;
+  border-radius:18px;
+  background:rgba(255,255,255,.42);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(255,255,255,.12),
+    0 12px 40px rgba(0,21,36,.12),
+    0 4px 12px rgba(0,0,0,.06);
+  margin-bottom:-8px;
+  transform-origin:center top;
+  opacity:0;
+  pointer-events:none;
+  will-change:transform,opacity;
+}
+
+/* slight horizontal offsets so floors look "disorderly" like real stacked slabs */
+.menu-floor:nth-child(1){ --rx: -3deg; --tx: -14px;  --ty: -18px; --rz: 1.2deg; }
+.menu-floor:nth-child(2){ --rx:  2deg; --tx:  18px;  --ty: -10px; --rz:-1.8deg; }
+.menu-floor:nth-child(3){ --rx: -1.5deg; --tx: -8px; --ty: -6px;  --rz: 0.8deg; }
+.menu-floor:nth-child(4){ --rx:  2.5deg; --tx: 12px; --ty: -4px;  --rz:-1.1deg; }
+.menu-floor:nth-child(5){ --rx: -2deg; --tx: -16px;  --ty:  2px;  --rz: 1.5deg; }
+.menu-floor:nth-child(6){ --rx:  1deg; --tx:  6px;   --ty:  6px;  --rz:-0.6deg; }
+
+.menu-floor .menu-link{
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
+  font-size:clamp(22px,4.5vw,32px);
+  font-weight:700;
   color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  opacity:.9;
+  transition:color .2s ease, opacity .2s ease;
+}
+
+.menu-floor .menu-link::before{
+  content:"</>";
+  color:var(--violet);
+  font-size:.55em;
+  opacity:.7;
+  flex-shrink:0;
+}
+
+.menu-floor .menu-link:hover,
+.menu-floor .menu-link.active{
+  color:var(--violet);
+  opacity:1;
+}
+
+.menu-floor .floor-label{
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--violet);
+  margin-bottom:6px;
+  opacity:.85;
+}
+
+/* OPEN: floors drop from above one by one and settle with slight disorder */
+.menu-overlay.open .menu-floor{
+  animation: floorDropIn .7s cubic-bezier(.22,1.1,.36,1) forwards;
+  pointer-events:auto;
+}
+
+.menu-overlay.open .menu-floor:nth-child(1){ animation-delay: .05s; }
+.menu-overlay.open .menu-floor:nth-child(2){ animation-delay: .14s; }
+.menu-overlay.open .menu-floor:nth-child(3){ animation-delay: .23s; }
+.menu-overlay.open .menu-floor:nth-child(4){ animation-delay: .32s; }
+.menu-overlay.open .menu-floor:nth-child(5){ animation-delay: .41s; }
+.menu-overlay.open .menu-floor:nth-child(6){ animation-delay: .50s; }
+
+@keyframes floorDropIn{
+  0%{
+    opacity:0;
+    transform: translateY(-120vh) translateX(var(--tx)) rotateX(18deg) rotateZ(var(--rz)) scale(.96);
+  }
+  65%{
+    opacity:1;
+    transform: translateY(8px) translateX(calc(var(--tx) * .6)) rotateX(-4deg) rotateZ(calc(var(--rz) * .5)) scale(1.01);
+  }
+  100%{
+    opacity:1;
+    transform: translateY(0) translateX(var(--tx)) rotateX(var(--rx)) rotateZ(var(--rz)) scale(1);
+  }
+}
+
+/* CLOSE: floors fall downward like raindrops (triggered via JS class) */
+.menu-overlay.closing .menu-floor{
+  animation: floorRainOut .65s cubic-bezier(.55,.05,.35,1) forwards !important;
+  pointer-events:none;
+}
+
+.menu-overlay.closing .menu-floor:nth-child(1){ animation-delay: .00s !important; }
+.menu-overlay.closing .menu-floor:nth-child(2){ animation-delay: .06s !important; }
+.menu-overlay.closing .menu-floor:nth-child(3){ animation-delay: .12s !important; }
+.menu-overlay.closing .menu-floor:nth-child(4){ animation-delay: .18s !important; }
+.menu-overlay.closing .menu-floor:nth-child(5){ animation-delay: .24s !important; }
+.menu-overlay.closing .menu-floor:nth-child(6){ animation-delay: .30s !important; }
+
+@keyframes floorRainOut{
+  0%{
+    opacity:1;
+    transform: translateY(0) translateX(var(--tx)) rotateX(var(--rx)) rotateZ(var(--rz)) scale(1);
+  }
+  100%{
+    opacity:0;
+    transform: translateY(110vh) translateX(calc(var(--tx) * 1.8)) rotateX(12deg) rotateZ(calc(var(--rz) * 2.5)) scale(.92);
+  }
 }
 
 /* =========================
@@ -215,20 +380,72 @@ nav{
 }
 
 .eyebrow{
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:11px;
   font-weight:600;
-  letter-spacing:.1em;
+  letter-spacing:.06em;
   text-transform:uppercase;
   color:var(--violet);
   margin-bottom:18px;
 }
 
+.eyebrow::before{
+  content:"// ";
+  color:var(--text-mid);
+}
+
+@keyframes blinkCursor{
+  50%{ opacity:0; }
+}
+
+.type-cursor{
+  display:inline-block;
+  color:var(--violet);
+  margin-left:1px;
+  animation:blinkCursor .9s steps(1) infinite;
+}
+
+.blink{
+  display:inline-block;
+  color:var(--violet);
+  font-size:15px;
+  margin-left:3px;
+  animation:blinkCursor 1s steps(1) infinite;
+}
+
+.term-dots{
+  display:flex;
+  gap:6px;
+}
+
+.term-dots i{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  display:block;
+}
+
+.term-dots i:nth-child(1){ background:var(--violet-dark); }
+.term-dots i:nth-child(2){ background:var(--violet); }
+.term-dots i:nth-child(3){ background:var(--text-mid); }
+
+.term-file{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.01em;
+}
+
+.btn-primary::before{
+  content:"$ ";
+  opacity:.7;
+}
+
 .hero h1{
-  font-family:"DM Serif Display",serif;
-  font-size:clamp(42px,5.5vw,70px);
-  line-height:1.04;
-  letter-spacing:-.025em;
-  font-weight:400;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
+  font-size:clamp(32px,4.6vw,56px);
+  line-height:1.15;
+  letter-spacing:-.02em;
+  font-weight:700;
 }
 
 .hero h1 em{
@@ -393,7 +610,7 @@ nav{
 }
 
 .profile-info h2{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:28px;
   font-weight:400;
 }
@@ -444,7 +661,7 @@ nav{
 }
 
 .ring-number{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:39px;
   line-height:1;
 }
@@ -472,7 +689,7 @@ nav{
 }
 
 .stat-value{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:24px;
   margin-top:4px;
 }
@@ -501,11 +718,11 @@ section{
 }
 
 .section-title{
-  font-family:"DM Serif Display",serif;
-  font-weight:400;
-  font-size:clamp(32px,4vw,48px);
-  line-height:1.12;
-  letter-spacing:-.02em;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
+  font-weight:700;
+  font-size:clamp(24px,3.2vw,38px);
+  line-height:1.22;
+  letter-spacing:-.015em;
 }
 
 .section-title em{
@@ -610,7 +827,7 @@ section{
 }
 
 .bento-card h3{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:23px;
   font-weight:400;
   margin-top:9px;
@@ -751,7 +968,7 @@ section{
 }
 
 .project h3{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:29px;
   font-weight:400;
   margin-top:55px;
@@ -808,7 +1025,7 @@ section{
 }
 
 .service h3{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:22px;
   font-weight:400;
 }
@@ -864,7 +1081,7 @@ section{
 }
 
 .timeline h3{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:23px;
   font-weight:400;
   margin-top:5px;
@@ -894,7 +1111,7 @@ section{
 }
 
 .cta h2{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:clamp(32px,4vw,50px);
   font-weight:400;
 }
@@ -916,7 +1133,7 @@ section{
 }
 
 .contact-card h3{
-  font-family:"DM Serif Display",serif;
+  font-family:"JetBrains Mono","Noto Sans Bengali",monospace;
   font-size:25px;
   font-weight:400;
   margin-bottom:20px;
@@ -1061,28 +1278,6 @@ footer{
 
   .nav-links{
     display:none;
-    position:absolute;
-    top:70px;
-    left:18px;
-    right:18px;
-    padding:12px;
-    border-radius:20px;
-    background:rgba(255,255,255,.72);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.7);
-    flex-direction:column;
-  }
-
-  .nav-links.open{
-    display:flex;
-  }
-
-  .nav-links a{
-    padding:12px;
-  }
-
-  .menu-btn{
-    display:block;
   }
 
   .hero{
@@ -1131,6 +1326,10 @@ footer{
     flex-direction:column;
     text-align:center;
   }
+
+  .menu-floor{
+    padding:18px 22px;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -1150,6 +1349,12 @@ footer{
     opacity:1;
     transform:none;
   }
+
+  .menu-overlay.open .menu-floor,
+  .menu-overlay.closing .menu-floor{
+    opacity:1;
+    transform:none;
+  }
 }
 </style>
 </head>
@@ -1164,23 +1369,61 @@ footer{
 <nav>
 
   <a href="#home" class="logo">
-    TR<em>.</em>
+    TR<em>.</em><span class="blink">▍</span>
   </a>
 
   <div class="nav-links" id="navLinks">
-    <a href="#home" class="active">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
+    <span class="nav-hint">// tap to navigate</span>
   </div>
 
   <button class="menu-btn" id="menuBtn" aria-label="Open menu">
-    ☰
+    <span></span><span></span><span></span>
   </button>
 
 </nav>
+</div>
+
+
+<!-- =========================
+     GLASS BUILDING FLOORS MENU
+========================= -->
+
+<div class="menu-overlay" id="menuOverlay">
+
+  <div class="menu-stack" id="menuStack">
+
+    <div class="menu-floor">
+      <div class="floor-label">// 01</div>
+      <a href="#home" class="menu-link">Home</a>
+    </div>
+
+    <div class="menu-floor">
+      <div class="floor-label">// 02</div>
+      <a href="#about" class="menu-link">About</a>
+    </div>
+
+    <div class="menu-floor">
+      <div class="floor-label">// 03</div>
+      <a href="#skills" class="menu-link">Skills</a>
+    </div>
+
+    <div class="menu-floor">
+      <div class="floor-label">// 04</div>
+      <a href="#projects" class="menu-link">Projects</a>
+    </div>
+
+    <div class="menu-floor">
+      <div class="floor-label">// 05</div>
+      <a href="#services" class="menu-link">Services</a>
+    </div>
+
+    <div class="menu-floor">
+      <div class="floor-label">// 06</div>
+      <a href="#contact" class="menu-link">Contact</a>
+    </div>
+
+  </div>
+
 </div>
 
 
@@ -1230,7 +1473,11 @@ footer{
 
     <div class="card-top">
 
-      <span>Developer Overview</span>
+      <span class="term-dots">
+        <i></i><i></i><i></i>
+      </span>
+
+      <span class="term-file">riyad@tr:~/profile.json</span>
 
       <span class="status">
         <i class="status-dot"></i>
@@ -1248,7 +1495,7 @@ footer{
 
         <img
           src="https://i.postimg.cc/V6RVKG1F/uk1h6g.jpg"
-          >
+          alt="Tahsinullah Riyad">
 
       </div>
 
@@ -1975,7 +2222,7 @@ footer{
       </p>
 
       <a
-        href="mailto:info@tahsinullahriyad.world"
+        href="info@tahsinullahriyad.world"
         class="btn btn-primary">
         Start a Conversation
       </a>
@@ -1994,7 +2241,7 @@ footer{
       <div class="contact-list">
 
         <a
-          href="mailto:info@tahsinullahriyad.world"
+          href="info@tahsinullahriyad.world"
           class="contact-link">
 
           <span class="contact-icon">
@@ -2143,10 +2390,6 @@ footer{
 
         </a>
 
-
-        <!-- YouTube placeholder intentionally disabled
-             because no YouTube URL was provided -->
-
       </div>
 
     </div>
@@ -2261,23 +2504,57 @@ footer{
 <script>
 
 /* =========================
-   MOBILE MENU
+   MOBILE MENU — Glass Building Floors
 ========================= */
 
 const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
+const menuOverlay = document.getElementById("menuOverlay");
+let isClosing = false;
+let closeTimeout = null;
+
+function openMenu(){
+  if(isClosing) return;
+  clearTimeout(closeTimeout);
+  menuOverlay.classList.remove("closing");
+  menuBtn.classList.add("open");
+  menuOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeMenu(){
+  if(!menuOverlay.classList.contains("open") || isClosing) return;
+
+  isClosing = true;
+  menuBtn.classList.remove("open");
+  menuOverlay.classList.add("closing");
+
+  // wait for rain-out animation to finish, then fully hide
+  closeTimeout = setTimeout(() => {
+    menuOverlay.classList.remove("open", "closing");
+    document.body.style.overflow = "";
+    isClosing = false;
+  }, 780); // slightly longer than longest delay + duration
+}
 
 menuBtn.addEventListener("click", () => {
-  navLinks.classList.toggle("open");
+  if(menuOverlay.classList.contains("open") && !isClosing){
+    closeMenu();
+  } else if(!isClosing){
+    openMenu();
+  }
 });
 
+document.querySelectorAll(".menu-link").forEach(link => {
+  link.addEventListener("click", closeMenu);
+});
 
-document.querySelectorAll(".nav-links a").forEach(link => {
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeMenu();
+});
 
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-  });
-
+// click outside the stack also closes
+menuOverlay.addEventListener("click", e => {
+  if(e.target === menuOverlay) closeMenu();
 });
 
 
@@ -2317,7 +2594,7 @@ document.querySelectorAll(".reveal").forEach(el => {
 ========================= */
 
 const sections = document.querySelectorAll("section[id]");
-const navItems = document.querySelectorAll(".nav-links a");
+const navItems = document.querySelectorAll(".menu-link");
 
 
 const navObserver = new IntersectionObserver(
@@ -2356,6 +2633,119 @@ const navObserver = new IntersectionObserver(
 sections.forEach(section => {
   navObserver.observe(section);
 });
+
+
+/* =========================
+   TYPEWRITER ON SCROLL
+========================= */
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function buildTypingSteps(el){
+
+  const originalNodes = Array.from(el.childNodes).map(n => n.cloneNode(true));
+  el.innerHTML = "";
+  const steps = [];
+
+  function walk(node, container){
+
+    if(node.nodeType === 3){
+
+      const text = node.textContent.replace(/\s+/g, " ");
+
+      for(const ch of text){
+        steps.push(() => {
+          container.appendChild(document.createTextNode(ch));
+          return container;
+        });
+      }
+
+    } else if(node.nodeType === 1){
+
+      const clone = document.createElement(node.tagName);
+
+      Array.from(node.attributes || []).forEach(attr => {
+        clone.setAttribute(attr.name, attr.value);
+      });
+
+      steps.push(() => {
+        container.appendChild(clone);
+        return clone;
+      });
+
+      Array.from(node.childNodes).forEach(child => walk(child, clone));
+
+    }
+
+  }
+
+  originalNodes.forEach(n => walk(n, el));
+
+  return steps;
+
+}
+
+function startTyping(el){
+
+  const steps = buildTypingSteps(el);
+
+  const cursor = document.createElement("span");
+  cursor.className = "type-cursor";
+  cursor.textContent = "▍";
+
+  let i = 0;
+
+  function tick(){
+
+    if(cursor.parentNode){
+      cursor.parentNode.removeChild(cursor);
+    }
+
+    if(i >= steps.length){
+      return;
+    }
+
+    const activeContainer = steps[i]();
+    activeContainer.appendChild(cursor);
+    i++;
+
+    setTimeout(tick, 14 + Math.random() * 20);
+
+  }
+
+  tick();
+
+}
+
+if(!reduceMotion){
+
+  const typeObserver = new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+          startTyping(entry.target);
+          typeObserver.unobserve(entry.target);
+        }
+
+      });
+
+    },
+    {
+      threshold:.3
+    }
+  );
+
+  document
+    .querySelectorAll(
+      "main h1, main h2, main h3, main p, main .eyebrow, main .about-highlight, main .card-tag, main .project-number, main .timeline-date, footer .footer-copy"
+    )
+    .forEach(el => {
+      typeObserver.observe(el);
+    });
+
+}
 
 </script>
 
