@@ -1,0 +1,5 @@
+# Cloudflare Pages configuration for the Tahsinullah Pro static builder.
+# The existing portfolio remains at the repository root; Cloudflare Pages serves /platform.
+name = "tahsinullah-pro"
+pages_build_output_dir = "platform"
+compatibility_date = "2026-09-29"
