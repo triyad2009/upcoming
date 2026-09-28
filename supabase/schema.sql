@@ -7,6 +7,12 @@ create table if not exists public.services(id uuid primary key default gen_rando
 create table if not exists public.skills(id uuid primary key default gen_random_uuid(),website_id uuid not null references public.websites(id) on delete cascade,name text not null,level integer check(level between 0 and 100),sort_order integer not null default 0);
 create table if not exists public.domains(id uuid primary key default gen_random_uuid(),website_id uuid not null references public.websites(id) on delete cascade,hostname text not null unique,status text not null default 'pending' check(status in('pending','verifying','verified','active','failed')),verification_token text not null,created_at timestamptz not null default now());
 alter table public.profiles enable row level security;alter table public.websites enable row level security;alter table public.projects enable row level security;alter table public.services enable row level security;alter table public.skills enable row level security;alter table public.domains enable row level security;
+drop policy if exists "profiles_self" on public.profiles;
+drop policy if exists "websites_owner" on public.websites;
+drop policy if exists "projects_owner" on public.projects;
+drop policy if exists "services_owner" on public.services;
+drop policy if exists "skills_owner" on public.skills;
+drop policy if exists "domains_owner" on public.domains;
 create policy "profiles_self" on public.profiles for all using(id=auth.uid()) with check(id=auth.uid());
 create policy "websites_owner" on public.websites for all using(owner_id=auth.uid()) with check(owner_id=auth.uid());
 create policy "projects_owner" on public.projects for all using(exists(select 1 from public.websites w where w.id=website_id and w.owner_id=auth.uid())) with check(exists(select 1 from public.websites w where w.id=website_id and w.owner_id=auth.uid()));
